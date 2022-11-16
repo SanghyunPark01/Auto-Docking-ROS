@@ -9,6 +9,7 @@ namespace realsense{
     ppx = 324.734598;
     ppy = 246.243079;
 
+    //calculate
     double x_s = (x - ppx) / fx;
     double y_s = (y - ppy) / fy;
 
@@ -20,7 +21,11 @@ namespace realsense{
     return point;
     }
     double Get_Depth_Value(double x, double y, cv::Mat depthImg){
-        double depth = 0.001*depthImg.at<u_int16_t>(y,x);
+            //align
+        double dXa = x*0.7+175;
+        double dYa = y*0.7+75;
+
+        double depth = 0.001*depthImg.at<u_int16_t>(dYa,dXa);
         return depth;
     }
 

@@ -12,6 +12,7 @@
 #include "mode.h"
 #include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
+#include <librealsense2/rsutil.h>
 
 cv::Mat cameraMatrix = (cv::Mat1d(3, 3) << 618.53013, 0., 324.7346, 0., 616.45867, 246.24308, 0., 0., 1.);
 cv::Mat distCoeffs = (cv::Mat1d(1, 5) << 0.123868, -0.281684, -0.002987, 0.000575, 0.);
@@ -38,7 +39,7 @@ public:
         _pub = _nh.advertise<geometry_msgs::Twist>("/docking/cmd_vel", 1000);
 
         back_rgb_sub.subscribe(_nh, "/camera/color/image_raw", 1);
-        back_depth_sub.subscribe(_nh, "/camera/aligned_depth_to_color/image_raw", 1);
+        back_depth_sub.subscribe(_nh, "/camera/depth/image_rect_raw", 1);
         front_rgb_sub.subscribe(_nh, "/camera/color/image_raw", 1);
         sync.reset(new message_filters::Synchronizer<MySyncPolicy>(MySyncPolicy(1), back_rgb_sub, back_depth_sub, front_rgb_sub));
 
@@ -151,13 +152,13 @@ void NodeServer::callback(const sensor_msgs::ImageConstPtr &back_rgb_msg, const 
         {
             cmd_vel.linear.x = 0.0;
             cmd_vel.linear.y = 0.0;
-            cmd_vel.angular.z = 3.0;
+            cmd_vel.angular.z = 0.6;
         }
         else if (mode == 1)
         {
             cmd_vel.linear.x = 0.0;
             cmd_vel.linear.y = 0.0;
-            cmd_vel.angular.z = 3.0;
+            cmd_vel.angular.z = 0.6;
         }
         else if (mode == 2)
         {
@@ -169,7 +170,6 @@ void NodeServer::callback(const sensor_msgs::ImageConstPtr &back_rgb_msg, const 
             ROS_ERROR("Mode error : check mode converting");
             return;
         }
-
         _pub.publish(cmd_vel);
     }
 }

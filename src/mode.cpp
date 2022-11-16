@@ -5,8 +5,8 @@
 #include "detector.h"
 #include "vector"
 
-#define LIMIT_LV 5
-#define LIMIT_AV 3
+#define LIMIT_LV 1
+#define LIMIT_AV 0.6
 
 cv::Vec2f dPastLError = 0;
 double dPastAError = 0;

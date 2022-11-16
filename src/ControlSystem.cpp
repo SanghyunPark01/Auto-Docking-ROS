@@ -12,10 +12,10 @@ cv::Mat distCoeffs1 = (cv::Mat1d(1, 5) << 0.123868, -0.281684, -0.002987, 0.0005
 #define REFER_Y 0.0 //Side
 #define REFER_A 0.0 //Yaw
 
-#define LX_Kp 0.1;
+#define LX_Kp 0.5;
 #define LX_Kd 0.1;
 
-#define LY_Kp 0.1;
+#define LY_Kp 0.5;
 #define LY_Kd 0.1;
 
 #define A_Kp 0.1;
