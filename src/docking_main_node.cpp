@@ -110,7 +110,9 @@ void NodeServer::callback(const sensor_msgs::ImageConstPtr &back_rgb_msg, const 
 
         geometry_msgs::Twist cmd_vel;
         
+        
         std::cout << "mode : "<< mode << std::endl;
+
         if(mode == 0 && main.lastMarkerPOS()==true){
             cmd_vel.linear.x = 0.0;
             cmd_vel.linear.y = 0.0;

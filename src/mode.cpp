@@ -10,6 +10,7 @@
 
 cv::Vec2f dPastLError = 0;
 double dPastAError = 0;
+bool _bLastMarkerPOS = false; //ture : right, false : left
 
 namespace mode
 {   

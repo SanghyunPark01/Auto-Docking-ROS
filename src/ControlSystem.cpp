@@ -15,10 +15,10 @@ cv::Mat distCoeffs1 = (cv::Mat1d(1, 5) << 0.123868, -0.281684, -0.002987, 0.0005
 #define LX_Kp 0.2;
 #define LX_Kd 0.1;
 
-#define LY_Kp 1.5;
+#define LY_Kp 1.6;
 #define LY_Kd 0.4;
 
-#define A_Kp 0.05;
+#define A_Kp 0.03;
 #define A_Kd 0.03;
 
 namespace ControlSystem{

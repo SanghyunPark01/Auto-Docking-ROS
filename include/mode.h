@@ -4,7 +4,6 @@
 #include "mode.h"
 #include <geometry_msgs/Twist.h>
 #include <opencv2/highgui/highgui.hpp>
-
 namespace mode{
     class Mode{
     private:
@@ -14,7 +13,6 @@ namespace mode{
         cv::Mat _BackDepthImg;
         std::vector<cv::Point2f> _vP2_Bcorners;
         std::vector<cv::Point2f> _vP2_Fcorners;
-        bool _bLastMarkerPOS = false; //ture : right, false : left
         double _dDistance;
     public:
         Mode(cv::Mat front_rgb_image, cv::Mat back_rgb_image);

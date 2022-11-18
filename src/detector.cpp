@@ -68,6 +68,8 @@ namespace Detector{
         if(good_corners.size() == 1){
             vP2_Bcorners = good_corners[0];
             //std::cout<<good_corners[0][0].x<<std::endl;
+            if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 > 320 )lastmarker = true;
+            else if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 < 320 ) lastmarker = false;
             return true;
         }
         for(int i = 0; i < good_ids.size(); i++){
@@ -79,10 +81,10 @@ namespace Detector{
             one_good_marker = abs(one_good_marker.center().x-dU0) < abs(marker_info[i].center().x-dU0) ? one_good_marker : marker_info[i];
         }
         vP2_Bcorners = one_good_marker.corners();
-        if(vP2_Bcorners.size()>0){
-            if(vP2_Bcorners[0].x > 0 )lastmarker = true;
-            else if(vP2_Bcorners[0].x < 0 ) lastmarker = false;
-        }
+
+        if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 > 320 )lastmarker = true;
+        else if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 < 320 ) lastmarker = false;
+
 
 
         return true;
