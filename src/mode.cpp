@@ -6,7 +6,7 @@
 #include "vector"
 
 #define LIMIT_LV 1
-#define LIMIT_AV 0.6
+#define LIMIT_AV 0.5
 
 cv::Vec2f dPastLError = 0;
 double dPastAError = 0;

@@ -3,7 +3,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "ControlSystem.h"
 
-#define ALLOWABLE_ERROR_X 0.03 //Robot forward(m)
+#define ALLOWABLE_ERROR_X 0.06 //Robot forward(m)
 #define ALLOWABLE_ERROR_Y 0.02 //Robot Side
 #define ALLOWABLE_ERROR_A 5 //Robot Angle(deg)
 
