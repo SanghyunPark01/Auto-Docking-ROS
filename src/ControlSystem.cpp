@@ -164,8 +164,8 @@ namespace ControlSystem{
 
         PDvel.angular.z = dAKp*_dCurrAError + dAKd*(_dCurrAError-_dPastAError);
 
-        PDvel.linear.x = dLxKp*_dCurrLError(0) + dLxKd*(_dCurrLError(0)-_dCurrLError(0))/dt;
-        PDvel.linear.y = dLyKp*_dCurrLError(1) + dLyKd*(_dCurrLError(1)-_dCurrLError(1))/dt;
+        PDvel.linear.x = dLxKp*_dCurrLError(0) + dLxKd*(_dCurrLError(0)-_dPastLError(0))/dt;
+        PDvel.linear.y = dLyKp*_dCurrLError(1) + dLyKd*(_dCurrLError(1)-_dPastLError(1))/dt;
 
         _cmd_vel = PDvel;
     }
