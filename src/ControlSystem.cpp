@@ -15,7 +15,7 @@ cv::Mat distCoeffs1 = (cv::Mat1d(1, 5) << 0.123868, -0.281684, -0.002987, 0.0005
 #define LX_Kp 0.2;
 #define LX_Kd 0.1;
 
-#define LY_Kp 1;
+#define LY_Kp 1.5;
 #define LY_Kd 0.4;
 
 #define A_Kp 0.05;
@@ -80,7 +80,7 @@ namespace ControlSystem{
         
         
         //------------------------------
-        //If you erase the if statement below, an segmentation error sometimes occurs.
+        //If you erase the 'if' statement below, an segmentation error sometimes occurs.
         if(_vp3Corner.empty() && dMarkerDepth >= 0.2){
             dMarkerDepth = 0;
         }
@@ -176,6 +176,10 @@ namespace ControlSystem{
             PDvel.angular.z = 0;
         }
 
+        _mDistance = _dCurrLError(0);
         _cmd_vel = PDvel;
+    }
+    double DockingController::Mdistance(void){
+        return _mDistance;
     }
 }

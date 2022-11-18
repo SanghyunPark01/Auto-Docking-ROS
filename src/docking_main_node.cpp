@@ -58,44 +58,7 @@ public:
     }
     void callback(const sensor_msgs::ImageConstPtr &back_rgb_msg, const sensor_msgs::ImageConstPtr &back_depth_msg, const sensor_msgs::ImageConstPtr &front_rgb_msg);
 };
-// class NodeServer{
-// private :
-//     ros::NodeHandle _nh;
-//     ros::Publisher _pub;
-//     ros::Subscriber _sub_flag;
 
-//     bool _bFlag = false;
-// public :
-//     //void callback(const sensor_msgs::ImageConstPtr& back_rgb_msg, const sensor_msgs::ImageConstPtr& back_depth_msg, const sensor_msgs::ImageConstPtr& front_rgb_msg);
-//     NodeServer(){
-//         _pub = _nh.advertise<geometry_msgs::Twist>("/docking/cmd_vel",1000);
-//         _sub_flag = _nh.subscribe("/check_DockingSystem_Flag",1,&NodeServer::Docking_Flag,this);
-//         message_filters::Subscriber<sensor_msgs::Image> back_rgb_sub(_nh, "/camera/color/image_raw", 1);
-//         message_filters::Subscriber<sensor_msgs::Image> back_depth_sub(_nh, "/camera/aligned_depth_to_color/image_raw", 1);
-//         //message_filters::Subscriber<sensor_msgs::Image> front_rgb_sub(_nh, "/camera2/color/image_raw", 1);
-
-//         message_filters::TimeSynchronizer<sensor_msgs::Image, sensor_msgs::Image> sync(back_rgb_sub, back_depth_sub, 1);
-//         //message_filters::TimeSynchronizer<sensor_msgs::Image, sensor_msgs::Image, sensor_msgs::Image> sync(back_rgb_sub, back_depth_sub, front_rgb_sub, 1);
-//         //sync.registerCallback(&NodeServer::callback);
-//         //sync.registerCallback(boost::bind(&NodeServer::callback, this, _1,_2,_3));
-//         typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, sensor_msgs::Image, sensor_msgs::Image> MySyncPolicy;
-//         boost::shared_ptr<message_filters::Synchronizer<MySyncPolicy>> sync;
-//         sync->registerCallback(boost::bind(&NodeServer::callback,this, _1, _2));
-
-//     }
-//     void Docking_Flag(const std_msgs::Int32 n){
-//         if(n.data==0){
-//             _bFlag = false;
-//         }else if(n.data==1){
-//             _bFlag = true;
-//         }
-
-//     }
-//     void callback(const sensor_msgs::ImageConstPtr& back_rgb_msg, const sensor_msgs::ImageConstPtr& back_depth_msg){
-//             std::cout<<"1"<<std::endl;
-
-//     }
-// };
 void NodeServer::callback(const sensor_msgs::ImageConstPtr &back_rgb_msg, const sensor_msgs::ImageConstPtr &back_depth_msg, const sensor_msgs::ImageConstPtr &front_rgb_msg)
 {
     // converting Img -> CV::Mat class
@@ -148,7 +111,16 @@ void NodeServer::callback(const sensor_msgs::ImageConstPtr &back_rgb_msg, const 
         geometry_msgs::Twist cmd_vel;
         
         std::cout << "mode : "<< mode << std::endl;
-        if (mode == 0)
+        if(mode == 0 && main.lastMarkerPOS()==true){
+            cmd_vel.linear.x = 0.0;
+            cmd_vel.linear.y = 0.0;
+            cmd_vel.angular.z = -0.6;
+        }else if(mode == 0 && main.lastMarkerPOS()==false){
+            cmd_vel.linear.x = 0.0;
+            cmd_vel.linear.y = 0.0;
+            cmd_vel.angular.z = 0.6;
+        }
+        else if (mode == 0)
         {
             cmd_vel.linear.x = 0.0;
             cmd_vel.linear.y = 0.0;

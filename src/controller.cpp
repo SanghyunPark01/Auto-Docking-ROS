@@ -8,7 +8,7 @@
 #define ALLOWABLE_ERROR_A 5 //Robot Angle(deg)
 
 //main controller : calculate Yaw, Distance and PD Control
-geometry_msgs::Twist controller::main_controller(cv::Mat BackColorImg, cv::Mat BackDepthImg, std::vector<cv::Point2f>corner, cv::Vec2f& dPastLError, double& dPastAError){
+geometry_msgs::Twist controller::main_controller(cv::Mat BackColorImg, cv::Mat BackDepthImg, std::vector<cv::Point2f>corner, cv::Vec2f& dPastLError, double& dPastAError, double& Mdistance){
     //double dCurrLError = 0;
     //double dCurrAError = 0;
 
@@ -32,6 +32,7 @@ geometry_msgs::Twist controller::main_controller(cv::Mat BackColorImg, cv::Mat B
 
     Controller.PDcontrol(dPLE, dPAE);
 
+    Mdistance = Controller.Mdistance();
     cmd_vel = Controller.cmd_vel();
 
     if(abs(Controller.CurrentLinearError()(0)) < ALLOWABLE_ERROR_X) cmd_vel.linear.x = 0;
