@@ -12,14 +12,14 @@ cv::Mat distCoeffs1 = (cv::Mat1d(1, 5) << 0.123868, -0.281684, -0.002987, 0.0005
 #define REFER_Y 0.0 //Side
 #define REFER_A 0.0 //Yaw
 
-#define LX_Kp 0.5;
+#define LX_Kp 0.2;
 #define LX_Kd 0.1;
 
-#define LY_Kp 0.5;
+#define LY_Kp 1.0;
 #define LY_Kd 0.1;
 
-#define A_Kp 0.1;
-#define A_Kd 0.1;
+#define A_Kp 0.03;
+#define A_Kd 0.03;
 
 namespace ControlSystem{
     DockingController::DockingController(cv::Mat BackColorImg, cv::Mat BackDepthImg, std::vector<cv::Point2f> corner){
@@ -128,7 +128,6 @@ namespace ControlSystem{
 
             
             dRealSenseYaw = atan(projection_point.y/projection_point.x);
-
         }
         _YawFusion(dOpencvYaw, dRealSenseYaw);   
         _dYaw_DEG = _dYaw*(180/3.14);
@@ -163,10 +162,25 @@ namespace ControlSystem{
         double dLyKd = LY_Kd;
 
         PDvel.angular.z = dAKp*_dCurrAError + dAKd*(_dCurrAError-_dPastAError);
-
+        
+        //option : constant x velocity
+        // if(abs(_dCurrLError(0))>0.03){
+        //     if(_dCurrLError(0)>0)PDvel.linear.x = 0.3;
+        //     else if(_dCurrLError(0)<0)PDvel.linear.x = -0.3;
+        // }else{PDvel.linear.x = 0;}
         PDvel.linear.x = dLxKp*_dCurrLError(0) + dLxKd*(_dCurrLError(0)-_dPastLError(0))/dt;
+        
         PDvel.linear.y = dLyKp*_dCurrLError(1) + dLyKd*(_dCurrLError(1)-_dPastLError(1))/dt;
+        
+        if(abs(_dCurrLError(0)) < 0.55 && abs(_dCurrLError(1)) > 0.1){
+            PDvel.linear.x = 0;
+            PDvel.angular.z = 0;
+        }
 
+        _mDistance = _dCurrLError(0);
         _cmd_vel = PDvel;
+    }
+    double DockingController::Mdistance(void){
+        return _mDistance;
     }
 }

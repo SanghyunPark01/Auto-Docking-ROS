@@ -48,7 +48,7 @@ namespace Detector{
         if(good_ids.size()<=0 || good_ids.size()>1) return false;
         return true;
     }
-    bool BackDetect_OneMarkers(std::vector<cv::Point2f>& vP2_Bcorners, cv::Mat cImg){
+    bool BackDetect_OneMarkers(std::vector<cv::Point2f>& vP2_Bcorners, cv::Mat cImg, bool& lastmarker){
         
         std::vector<int> b_ids;
         std::vector<int> good_ids;
@@ -68,6 +68,8 @@ namespace Detector{
         if(good_corners.size() == 1){
             vP2_Bcorners = good_corners[0];
             //std::cout<<good_corners[0][0].x<<std::endl;
+            if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 > 320 )lastmarker = true;
+            else if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 < 320 ) lastmarker = false;
             return true;
         }
         for(int i = 0; i < good_ids.size(); i++){
@@ -79,6 +81,8 @@ namespace Detector{
             one_good_marker = abs(one_good_marker.center().x-dU0) < abs(marker_info[i].center().x-dU0) ? one_good_marker : marker_info[i];
         }
         vP2_Bcorners = one_good_marker.corners();
+        if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 > 320 )lastmarker = true;
+        else if((vP2_Bcorners[0].x+vP2_Bcorners[1].x)/2 < 320 ) lastmarker = false;
 
         return true;
     }

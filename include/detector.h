@@ -4,7 +4,7 @@
 
 namespace Detector{
     bool FrontDetect_OneMarkers(std::vector<cv::Point2f>& vP2_Fcorners, cv::Mat cImg);
-    bool BackDetect_OneMarkers(std::vector<cv::Point2f>& vP2_Bcorners, cv::Mat cImg);
+    bool BackDetect_OneMarkers(std::vector<cv::Point2f>& vP2_Bcorners, cv::Mat cImg, bool& lastmarker);
 }
 
 

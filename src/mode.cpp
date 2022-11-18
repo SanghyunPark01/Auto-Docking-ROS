@@ -10,6 +10,7 @@
 
 cv::Vec2f dPastLError = 0;
 double dPastAError = 0;
+bool _bLastMarkerPOS = false; //ture : right, false : left
 
 namespace mode
 {   
@@ -22,6 +23,12 @@ namespace mode
     }
     geometry_msgs::Twist Mode::cmd_vel(void){
         return _cmd_vel;
+    }
+    bool Mode::lastMarkerPOS(void){
+        return _bLastMarkerPOS;
+    }
+    double Mode::Mdistance(void){
+        return _dDistance;
     }
     void Mode::SelectMode(void){
         int mode;
@@ -37,7 +44,7 @@ namespace mode
         bool FrontExist = false;
         bool BackExist = false;
         FrontExist = Detector::FrontDetect_OneMarkers(vP2_Fcorners, _FrontColorImg);
-        BackExist  = Detector::BackDetect_OneMarkers(vP2_Bcorners, _BackColorImg);
+        BackExist  = Detector::BackDetect_OneMarkers(vP2_Bcorners, _BackColorImg, _bLastMarkerPOS);
         //std::cout <<vP2_Bcorners<<std::endl;
 
         if(!FrontExist && !BackExist){
@@ -62,7 +69,7 @@ namespace mode
         //cv::imshow("depth",_BackDepthImg);
         //cv::waitKey(1);
 
-        cmd_vel = controller::main_controller(_BackColorImg, _BackDepthImg,_vP2_Bcorners ,dPastLError, dPastAError);
+        cmd_vel = controller::main_controller(_BackColorImg, _BackDepthImg,_vP2_Bcorners ,dPastLError, dPastAError, _dDistance);
 
         //saturation
         if(cmd_vel.angular.z > LIMIT_AV)cmd_vel.angular.z = LIMIT_AV;

@@ -23,6 +23,7 @@ namespace ControlSystem{
         double _closedepth(void);
         void _dCalculateYaw(double markerdepth);
         void _YawFusion(double opencv_yaw, double my_yaw);
+        double _mDistance;
     public:
         DockingController(cv::Mat BackColorImg, cv::Mat BackDepthImg, std::vector<cv::Point2f> corner);
         void PDcontrol(cv::Vec2f dPastLError, double dPastAError);
@@ -32,6 +33,7 @@ namespace ControlSystem{
         cv::Point2f Center(void);
         geometry_msgs::Twist cmd_vel(void);
         void CalculateError(void);
+        double Mdistance(void);
     };
 }
 
