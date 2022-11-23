@@ -74,7 +74,7 @@ catkin_make
 
 ## 🛠️Run  
 * **STEP 1** :  
-  In [`docking_main_node.cpp`](https://github.com/SanghyunPark01/Auto-Docking-ROS/blob/8ae13fe07a070c190b01b54cffa3e548c3e01acd/src/docking_main_node.cpp#L38), you have to publish `/check_DockingSystem_Flag`. But, if you don't want this, you have to erase [\`//\` in docking_main_node.cpp - line 64](https://github.com/SanghyunPark01/Auto-Docking-ROS/blob/8ae13fe07a070c190b01b54cffa3e548c3e01acd/src/docking_main_node.cpp#L64)
+  In [`docking_main_node.cpp`](https://github.com/SanghyunPark01/Auto-Docking-ROS/blob/8ae13fe07a070c190b01b54cffa3e548c3e01acd/src/docking_main_node.cpp#L38), you have to publish `/check_DockingSystem_Flag`. If you want this, you have to erase [\`//\` in docking_main_node.cpp - line 64](https://github.com/SanghyunPark01/Auto-Docking-ROS/blob/8ae13fe07a070c190b01b54cffa3e548c3e01acd/src/docking_main_node.cpp#L64)
 * **STEP 2** :  
   ```
   roslaunch realsense2_camera rs_camera.launch
